@@ -5,9 +5,17 @@
     git
     curl
     wget
+    helix
+    htop
+    tty-clock
+    ripgrep
   ];
 
-  services.openssh.enable = true;
+  environment.variables = {
+    EDITOR = "hx";
+    PAGER = "less";
+  };
 
+  services.openssh.enable = true;
   users.users.root.initialPassword = "nixos";
 }

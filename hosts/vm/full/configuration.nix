@@ -1,5 +1,5 @@
 { config, pkgs, ... }: {
-  imports = [ ../../../profiles/base.nix ];
+  imports = [ ../../../profiles/desktop.nix ];
 
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sda";

@@ -13,10 +13,12 @@
 │       └── nano
 │           └── configuration.nix
 ├── profiles
-│   └── base.nix
+│   ├── base.nix
+│   ├── core.nix
+│   └── desktop.nix
 └── README.md
 
-9 directories, 8 files
+9 directories, 10 files
 
 ==== FILE: README.md ====
 # astra
@@ -114,20 +116,19 @@ Works on my machine. Fix it if it doesn't work for you.
 
 ==== FILE: hosts/vm/full/configuration.nix ====
 { config, pkgs, ... }: {
-  imports = [ ../../../profiles/base.nix ];
+  imports = [ ../../../profiles/desktop.nix ];
 
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sda";
 
-  networking.hostName = "astra-vm-nano";
-  networking.nameservers = [ "192.168.216.2" "8.8.8.8" ];
+  networking.hostName = "astra-vm-full";
 
   fileSystems."/" = {
     device = "/dev/sda1";
     fsType = "ext4";
   };
 
-  users.users.simi = {
+  users.users.user = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
   };
@@ -138,20 +139,19 @@ Works on my machine. Fix it if it doesn't work for you.
 
 ==== FILE: hosts/vm/mini/configuration.nix ====
 { config, pkgs, ... }: {
-  imports = [ ../../../profiles/base.nix ];
+  imports = [ ../../../profiles/core.nix ];
 
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sda";
 
   networking.hostName = "astra-vm-mini";
-  networking.nameservers = [ "192.168.216.2" "8.8.8.8" ];
 
   fileSystems."/" = {
     device = "/dev/sda1";
     fsType = "ext4";
   };
 
-  users.users.simi = {
+  users.users.user = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
   };
@@ -168,14 +168,13 @@ Works on my machine. Fix it if it doesn't work for you.
   boot.loader.grub.device = "/dev/sda";
 
   networking.hostName = "astra-vm-nano";
-  networking.nameservers = [ "192.168.216.2" "8.8.8.8" ];
 
   fileSystems."/" = {
     device = "/dev/sda1";
     fsType = "ext4";
   };
 
-  users.users.simi = {
+  users.users.user = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
   };
@@ -192,11 +191,57 @@ Works on my machine. Fix it if it doesn't work for you.
     git
     curl
     wget
+    helix
+    htop
+    tty-clock
+    ripgrep
   ];
 
-  services.openssh.enable = true;
+  environment.variables = {
+    EDITOR = "hx";
+    PAGER = "less";
+  };
 
+  services.openssh.enable = true;
   users.users.root.initialPassword = "nixos";
+}
+
+
+==== FILE: profiles/core.nix ====
+{ config, pkgs, ... }: {
+  imports = [ ./base.nix ];
+
+  environment.systemPackages = with pkgs; [
+    adb
+    btop
+    fd
+    gh
+    go
+    jq
+    neovim
+    python3
+    rustup
+    speedtest-cli
+    tailscale
+  ];
+
+  virtualisation.docker.enable = true;
+  services.tailscale.enable = true;
+}
+
+
+==== FILE: profiles/desktop.nix ====
+{ config, pkgs, ... }: {
+  imports = [ ./core.nix ];
+
+  environment.systemPackages = with pkgs; [
+    android-studio
+    ghostty
+    rustdesk
+    visual-studio-code
+    zed-editor
+    zen-browser
+  ];
 }
 
 
