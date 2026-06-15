@@ -1,0 +1,202 @@
+.
+├── audit.txt
+├── flake.lock
+├── flake.nix
+├── hosts
+│   ├── desktop
+│   ├── server
+│   └── vm
+│       ├── full
+│       │   └── configuration.nix
+│       ├── mini
+│       │   └── configuration.nix
+│       └── nano
+│           └── configuration.nix
+├── profiles
+│   └── base.nix
+└── README.md
+
+9 directories, 8 files
+
+==== FILE: README.md ====
+# astra
+The abstract "Operating System." Everything. One "insecure" place.
+<sub>(Yes its just NixOS with stuff)</sub>
+
+## what
+A NixOS flake that describes every machine I own. One repo, one source of truth, zero excuses.
+
+## Why
+Because reinstalling is a skill issue.
+
+## machines
+pray
+
+## structure
+```
+astra/
+├── flake.nix
+├── hosts/          # per-machine configs
+├── modules/        # reusable bits
+└── profiles/       # workstation, server, minimal
+```
+
+## secrets
+yes please
+
+## usage
+```bash
+nixos-rebuild switch --flake .#hostname
+```
+
+## status
+Works on my machine. Fix it if it doesn't work for you.
+
+
+==== FILE: flake.lock ====
+{
+  "nodes": {
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1781074563,
+        "narHash": "sha256-md8WlXOlfnIeHeOScMTTHFyf2d6iaTwPl2apR5EQ3P4=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "9ae611a455b90cf061d8f332b977e387bda8e1ca",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
+
+
+==== FILE: flake.nix ====
+{
+  description = "astra";
+
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  };
+
+  outputs = { self, nixpkgs, ... }: {
+    nixosConfigurations = {
+      vm-nano = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [ ./hosts/vm/nano/configuration.nix ];
+      };
+
+      vm-mini = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [ ./hosts/vm/mini/configuration.nix ];
+      };
+
+      vm-full = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [ ./hosts/vm/full/configuration.nix ];
+      };
+    };
+  };
+}
+
+
+==== FILE: hosts/vm/full/configuration.nix ====
+{ config, pkgs, ... }: {
+  imports = [ ../../../profiles/base.nix ];
+
+  boot.loader.grub.enable = true;
+  boot.loader.grub.device = "/dev/sda";
+
+  networking.hostName = "astra-vm-nano";
+  networking.nameservers = [ "192.168.216.2" "8.8.8.8" ];
+
+  fileSystems."/" = {
+    device = "/dev/sda1";
+    fsType = "ext4";
+  };
+
+  users.users.simi = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" ];
+  };
+
+  system.stateVersion = "24.11";
+}
+
+
+==== FILE: hosts/vm/mini/configuration.nix ====
+{ config, pkgs, ... }: {
+  imports = [ ../../../profiles/base.nix ];
+
+  boot.loader.grub.enable = true;
+  boot.loader.grub.device = "/dev/sda";
+
+  networking.hostName = "astra-vm-mini";
+  networking.nameservers = [ "192.168.216.2" "8.8.8.8" ];
+
+  fileSystems."/" = {
+    device = "/dev/sda1";
+    fsType = "ext4";
+  };
+
+  users.users.simi = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" ];
+  };
+
+  system.stateVersion = "24.11";
+}
+
+
+==== FILE: hosts/vm/nano/configuration.nix ====
+{ config, pkgs, ... }: {
+  imports = [ ../../../profiles/base.nix ];
+
+  boot.loader.grub.enable = true;
+  boot.loader.grub.device = "/dev/sda";
+
+  networking.hostName = "astra-vm-nano";
+  networking.nameservers = [ "192.168.216.2" "8.8.8.8" ];
+
+  fileSystems."/" = {
+    device = "/dev/sda1";
+    fsType = "ext4";
+  };
+
+  users.users.simi = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" ];
+  };
+
+  system.stateVersion = "24.11";
+}
+
+
+==== FILE: profiles/base.nix ====
+{ config, pkgs, ... }: {
+  networking.nameservers = [ "8.8.8.8" "1.1.1.1" ];
+
+  environment.systemPackages = with pkgs; [
+    git
+    curl
+    wget
+  ];
+
+  services.openssh.enable = true;
+
+  users.users.root.initialPassword = "nixos";
+}
+
+
