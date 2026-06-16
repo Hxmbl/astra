@@ -4,21 +4,26 @@
 ├── flake.nix
 ├── hosts
 │   ├── desktop
+│   ├── laptop
+│   │   └── configuration.nix
+│   ├── mobile-workstation
+│   ├── sbc
 │   ├── server
-│   └── vm
-│       ├── full
-│       │   └── configuration.nix
-│       ├── mini
-│       │   └── configuration.nix
-│       └── nano
-│           └── configuration.nix
+│   ├── vm
+│   │   ├── full
+│   │   │   └── configuration.nix
+│   │   ├── mini
+│   │   │   └── configuration.nix
+│   │   └── nano
+│   │       └── configuration.nix
+│   └── workstation
 ├── profiles
 │   ├── base.nix
 │   ├── core.nix
 │   └── desktop.nix
 └── README.md
 
-9 directories, 10 files
+13 directories, 11 files
 
 ==== FILE: README.md ====
 # astra
@@ -109,8 +114,38 @@ Works on my machine. Fix it if it doesn't work for you.
         system = "x86_64-linux";
         modules = [ ./hosts/vm/full/configuration.nix ];
       };
+
+      laptop = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [ ./hosts/laptop/configuration.nix ];
+      };
     };
   };
+}
+
+
+==== FILE: hosts/laptop/configuration.nix ====
+{ config, pkgs, ... }: {
+  imports = [ ../../../profiles/desktop.nix ];
+
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  networking.hostName = "astra-laptop";
+
+  # generated on install
+  # imports = [ ./hardware-configuration.nix ];
+
+  users.users.user = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" "video" "audio" "networkmanager" ];
+  };
+
+  # battery
+  services.tlp.enable = true;
+  powerManagement.enable = true;
+
+  system.stateVersion = "24.11";
 }
 
 

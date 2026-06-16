@@ -21,6 +21,11 @@
         system = "x86_64-linux";
         modules = [ ./hosts/vm/full/configuration.nix ];
       };
+
+      laptop = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [ ./hosts/laptop/configuration.nix ];
+      };
     };
   };
 }

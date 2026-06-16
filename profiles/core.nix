@@ -13,6 +13,7 @@
     rustup
     speedtest-cli
     tailscale
+    zoxide
   ];
 
   virtualisation.docker.enable = true;
