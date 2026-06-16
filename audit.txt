@@ -2,9 +2,13 @@
 ├── audit.txt
 ├── flake.lock
 ├── flake.nix
+├── home
+│   └── default.nix
 ├── hosts
+│   ├── desktop
 │   ├── laptop
 │   │   └── configuration.nix
+│   ├── server
 │   └── vm
 │       ├── full
 │       │   └── configuration.nix
@@ -18,7 +22,7 @@
 │   └── desktop.nix
 └── README.md
 
-8 directories, 11 files
+11 directories, 12 files
 
 ==== FILE: README.md ====
 # astra
@@ -91,6 +95,10 @@ Works on my machine. Fix it if it doesn't work for you.
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, ... }: {
@@ -119,6 +127,37 @@ Works on my machine. Fix it if it doesn't work for you.
 }
 
 
+==== FILE: home/default.nix ====
+{ config, pkgs, ... }: {
+  home.username = "user";
+  home.homeDirectory = "/home/user";
+  home.stateVersion = "24.11";
+
+  programs.zsh = {
+    enable = true;
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
+    enableCompletion = true;
+  };
+
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
+  programs.git = {
+    enable = true;
+    userName = "user";
+    userEmail = "user@astra";
+  };
+
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+}
+
+
 ==== FILE: hosts/laptop/configuration.nix ====
 { config, pkgs, ... }: {
   imports = [ ../../profiles/desktop.nix ];
@@ -130,6 +169,11 @@ Works on my machine. Fix it if it doesn't work for you.
 
   # generated on install
   # imports = [ ./hardware-configuration.nix ];
+  #
+  fileSystems."/" = {
+    device = "/dev/sda1";
+    fsType = "ext4";
+  };
 
   users.users.user = {
     isNormalUser = true;
@@ -137,7 +181,6 @@ Works on my machine. Fix it if it doesn't work for you.
   };
 
   # battery
-  services.tlp.enable = true;
   powerManagement.enable = true;
 
   system.stateVersion = "24.11";
@@ -264,6 +307,11 @@ Works on my machine. Fix it if it doesn't work for you.
 ==== FILE: profiles/desktop.nix ====
 { config, pkgs, ... }: {
   imports = [ ./core.nix ];
+
+  services.displayManager.gdm.enable = true;
+
+  programs.hyprland.enable = true;
+  services.desktopManager.plasma6.enable = true;
 
   environment.systemPackages = with pkgs; [
     android-studio
