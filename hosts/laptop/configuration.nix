@@ -1,5 +1,5 @@
 { config, pkgs, ... }: {
-  imports = [ ../../../profiles/desktop.nix ];
+  imports = [ ../../profiles/desktop.nix ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
