@@ -3,27 +3,22 @@
 ├── flake.lock
 ├── flake.nix
 ├── hosts
-│   ├── desktop
 │   ├── laptop
 │   │   └── configuration.nix
-│   ├── mobile-workstation
-│   ├── sbc
-│   ├── server
-│   ├── vm
-│   │   ├── full
-│   │   │   └── configuration.nix
-│   │   ├── mini
-│   │   │   └── configuration.nix
-│   │   └── nano
-│   │       └── configuration.nix
-│   └── workstation
+│   └── vm
+│       ├── full
+│       │   └── configuration.nix
+│       ├── mini
+│       │   └── configuration.nix
+│       └── nano
+│           └── configuration.nix
 ├── profiles
 │   ├── base.nix
 │   ├── core.nix
 │   └── desktop.nix
 └── README.md
 
-13 directories, 11 files
+8 directories, 11 files
 
 ==== FILE: README.md ====
 # astra
@@ -126,7 +121,7 @@ Works on my machine. Fix it if it doesn't work for you.
 
 ==== FILE: hosts/laptop/configuration.nix ====
 { config, pkgs, ... }: {
-  imports = [ ../../../profiles/desktop.nix ];
+  imports = [ ../../profiles/desktop.nix ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -258,6 +253,7 @@ Works on my machine. Fix it if it doesn't work for you.
     rustup
     speedtest-cli
     tailscale
+    zoxide
   ];
 
   virtualisation.docker.enable = true;

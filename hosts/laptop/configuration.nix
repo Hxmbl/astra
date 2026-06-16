@@ -8,6 +8,11 @@
 
   # generated on install
   # imports = [ ./hardware-configuration.nix ];
+  #
+  fileSystems."/" = {
+    device = "/dev/sda1";
+    fsType = "ext4";
+  };
 
   users.users.user = {
     isNormalUser = true;
