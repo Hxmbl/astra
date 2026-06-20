@@ -1,5 +1,7 @@
-{ config, pkgs, zen-browser, ... }: {
+{ config, pkgs, zen-browser, cursor, ... }: {
   imports = [ ./core.nix ];
+
+  nixpkgs.config.allowUnfree = true;
 
   programs.hyprland.enable = true;
 
@@ -15,6 +17,7 @@
 
   environment.systemPackages = with pkgs; [
     android-studio
+    cursor.packages.${pkgs.stdenv.hostPlatform.system}.default
     ghostty
     jetbrains-toolbox
     localsend

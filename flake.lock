@@ -1,5 +1,25 @@
 {
   "nodes": {
+    "cursor": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1781808562,
+        "narHash": "sha256-W/zrUAehrcM8uP2iD4tzuNCdGy6/mp3nxyEc5wcx/yg=",
+        "owner": "tomsch",
+        "repo": "cursor-nix",
+        "rev": "0d7a33120149859596b5d6241b08709ff47db8c4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tomsch",
+        "repo": "cursor-nix",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -59,6 +79,7 @@
     },
     "root": {
       "inputs": {
+        "cursor": "cursor",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "zen-browser": "zen-browser"
