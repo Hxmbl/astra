@@ -1,10 +1,17 @@
 { config, pkgs, ... }: {
   imports = [ ./core.nix ];
 
-  services.displayManager.gdm.enable = true;
-
   programs.hyprland.enable = true;
-  services.desktopManager.plasma6.enable = true;
+
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd Hyprland";
+        user = "greeter";
+      };
+    };
+  };
 
   environment.systemPackages = with pkgs; [
     android-studio

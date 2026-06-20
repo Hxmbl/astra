@@ -62,6 +62,26 @@ Works on my machine. Fix it if it doesn't work for you.
 ==== FILE: flake.lock ====
 {
   "nodes": {
+    "home-manager": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1781615165,
+        "narHash": "sha256-CFF4fNNfr2GZSx1xJhBNBi7VMj8OtOqZGOV+fiBSbzw=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "34dd288e65012954cf7170658e0e6a61255b0327",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1781074563,
@@ -80,6 +100,7 @@ Works on my machine. Fix it if it doesn't work for you.
     },
     "root": {
       "inputs": {
+        "home-manager": "home-manager",
         "nixpkgs": "nixpkgs"
       }
     }
@@ -101,26 +122,38 @@ Works on my machine. Fix it if it doesn't work for you.
     };
   };
 
-  outputs = { self, nixpkgs, ... }: {
+  outputs = { self, nixpkgs, home-manager, ... }: {
     nixosConfigurations = {
       vm-nano = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = [ ./hosts/vm/nano/configuration.nix ];
+        modules = [
+          ./hosts/vm/nano/configuration.nix
+          home-manager.nixosModules.home-manager
+        ];
       };
 
       vm-mini = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = [ ./hosts/vm/mini/configuration.nix ];
+        modules = [
+          ./hosts/vm/mini/configuration.nix
+          home-manager.nixosModules.home-manager
+        ];
       };
 
       vm-full = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = [ ./hosts/vm/full/configuration.nix ];
+        modules = [
+          ./hosts/vm/full/configuration.nix
+          home-manager.nixosModules.home-manager
+        ];
       };
 
       laptop = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = [ ./hosts/laptop/configuration.nix ];
+        modules = [
+          ./hosts/laptop/configuration.nix
+          home-manager.nixosModules.home-manager
+        ];
       };
     };
   };
@@ -147,14 +180,25 @@ Works on my machine. Fix it if it doesn't work for you.
 
   programs.git = {
     enable = true;
-    userName = "user";
-    userEmail = "user@astra";
   };
 
   programs.zoxide = {
     enable = true;
     enableZshIntegration = true;
   };
+
+  programs.zsh.shellAliases = {
+    la = "ls -a";
+    p1 = "ping 1.1.1.1";
+    speed = "speedtest";
+    speed-bytes = "speedtest -u auto-binary-bytes";
+    clock = "tty-clock -csbt";
+    tty-clock = "tty-clock -csbt";
+    where = "which";
+    py = "python";
+    py3 = "python3";
+  };
+
 }
 
 
@@ -301,6 +345,11 @@ Works on my machine. Fix it if it doesn't work for you.
 
   virtualisation.docker.enable = true;
   services.tailscale.enable = true;
+
+  home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
+  home-manager.users.user = import ../home/default.nix;
+
 }
 
 

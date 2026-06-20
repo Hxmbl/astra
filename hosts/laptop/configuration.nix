@@ -8,9 +8,10 @@
 
   # generated on install
   # imports = [ ./hardware-configuration.nix ];
-  #
+
+  # PLACEHOLDER — replace with UUID mounts from nixos-generate-config on real install
   fileSystems."/" = {
-    device = "/dev/sda1";
+    device = "/dev/disk/by-label/nixos";
     fsType = "ext4";
   };
 

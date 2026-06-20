@@ -14,6 +14,7 @@
   users.users.user = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
+    initialPassword = "nixos";
   };
 
   system.stateVersion = "24.11";

@@ -17,5 +17,4 @@
   };
 
   services.openssh.enable = true;
-  users.users.root.initialPassword = "nixos";
 }
