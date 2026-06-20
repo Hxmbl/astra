@@ -61,6 +61,13 @@
           ./hosts/server/configuration.nix
         ];
       };
+
+      server-core = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/server-core/configuration.nix
+        ];
+      };
     };
   };
 }
