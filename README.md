@@ -5,7 +5,7 @@ The abstract "Operating System." Everything. One "insecure" place.
 ## what
 A NixOS flake that describes every machine I own. One repo, one source of truth, zero excuses.
 
-## Why
+## why
 Because reinstalling is a skill issue.
 
 ## quick start
