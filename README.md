@@ -9,15 +9,22 @@ A NixOS flake that describes every machine I own. One repo, one source of truth,
 Because reinstalling is a skill issue.
 
 ## machines
-pray
+| host | profile | status |
+|------|---------|--------|
+| vm-nano | base | working |
+| vm-mini | core | working |
+| vm-full | desktop | working |
+| laptop | desktop | wip |
+| desktop | — | planned |
+| server | — | planned |
 
 ## structure
 ```
 astra/
 ├── flake.nix
 ├── hosts/          # per-machine configs
-├── modules/        # reusable bits
-└── profiles/       # workstation, server, minimal
+├── home/           # home-manager config
+└── profiles/       # base → core → desktop
 ```
 
 ## secrets
