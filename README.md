@@ -25,6 +25,35 @@ for laptop (generates hardware config automatically):
 bash <(curl -s https://raw.githubusercontent.com/Hxmbl/astra/main/install.sh) laptop
 ```
 
+## login
+default user: `user`
+default password: `nixos`
+
+run `passwd` after first login to set your real password.
+
+## customization
+everything lives in `~/astra/`. here's what you'd edit:
+
+| want to change | edit this |
+|---|---|
+| username | `hosts/<host>/configuration.nix` — `users.users.user` (rename `user` to your name) |
+| password | same file — `initialPassword` |
+| hostname | same file — `networking.hostName` |
+| desktop packages | `profiles/desktop.nix` — `environment.systemPackages` |
+| dev tools | `profiles/core.nix` — `environment.systemPackages` |
+| hyprland binds | `home/default.nix` — `xdg.configFile."hypr/hyprland.conf"` |
+| starship prompt | `home/default.nix` — `programs.starship.settings` |
+| git config | `home/default.nix` — `programs.git` (set `userName` and `userEmail`) |
+| ghostty terminal | `home/default.nix` — `xdg.configFile."ghostty/config"` |
+| hyprlock screen | `home/default.nix` — `xdg.configFile."hypr/hyprlock.conf"` |
+| server services | `hosts/server/configuration.nix` — `virtualisation.oci-containers` |
+| server firewall | same file — `networking.firewall` |
+
+after editing, rebuild:
+```bash
+sudo nixos-rebuild switch --flake ~/astra#<host>
+```
+
 ## machines
 | host | profile | status |
 |------|---------|--------|
@@ -32,8 +61,8 @@ bash <(curl -s https://raw.githubusercontent.com/Hxmbl/astra/main/install.sh) la
 | vm-mini | core | working |
 | vm-full | desktop | working |
 | laptop | desktop | wip |
-| desktop | — | planned |
-| server | — | planned |
+| server | base | working |
+| server-core | base | working |
 
 ## structure
 ```

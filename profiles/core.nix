@@ -5,6 +5,7 @@
     adb
     btop
     fd
+    fastfetch
     gh
     go
     jq
@@ -13,6 +14,7 @@
     rustup
     speedtest-cli
     tailscale
+    tmux
     zoxide
   ];
 

@@ -1,8 +1,6 @@
 { config, pkgs, zen-browser, cursor, ... }: {
   imports = [ ./core.nix ];
 
-  nixpkgs.config.allowUnfree = true;
-
   programs.hyprland.enable = true;
 
   services.greetd = {
@@ -19,12 +17,14 @@
     android-studio
     cursor.packages.${pkgs.stdenv.hostPlatform.system}.default
     ghostty
+    hyprlock
     jetbrains-toolbox
     localsend
     obsidian
     rustdesk
     visual-studio-code
     wireshark
+    rofi-wayland
     zed-editor
     zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
