@@ -1,5 +1,6 @@
 { config, pkgs, ... }: {
   networking.nameservers = [ "8.8.8.8" "1.1.1.1" ];
+  networking.networkmanager.enable = true;
 
   environment.systemPackages = with pkgs; [
     git

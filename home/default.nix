@@ -17,6 +17,9 @@
 
   programs.git = {
     enable = true;
+    # TODO: set your name and email
+    # userName = "you";
+    # userEmail = "you@example.com";
   };
 
   programs.zoxide = {
@@ -32,8 +35,6 @@
     clock = "tty-clock -csbt";
     tty-clock = "tty-clock -csbt";
     where = "which";
-    py = "python";
-    py3 = "python3";
+    py = "python3";
   };
-
 }
