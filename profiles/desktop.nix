@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, zen-browser, ... }: {
   imports = [ ./core.nix ];
 
   programs.hyprland.enable = true;
@@ -23,6 +23,6 @@
     visual-studio-code
     wireshark
     zed-editor
-    zen-browser
+    zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 }
