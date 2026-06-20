@@ -16,8 +16,12 @@
   environment.systemPackages = with pkgs; [
     android-studio
     ghostty
+    jetbrains-toolbox
+    localsend
+    obsidian
     rustdesk
     visual-studio-code
+    wireshark
     zed-editor
     zen-browser
   ];
