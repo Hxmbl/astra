@@ -140,10 +140,14 @@ fi
 if [ "$HOST" = "laptop" ]; then
   info "generating hardware config..."
   nixos-generate-config --show-hardware-config > hosts/laptop/hardware-configuration.nix
+  # uncomment the import
   if [[ "$(uname)" == "Darwin" ]]; then
-    sed -i '' 's|# imports = \[ ./hardware-configuration.nix \];|imports = [ ./hardware-configuration.nix ];|' hosts/laptop/configuration.nix
+    sed -i '' 's|# ./hardware-configuration.nix|./hardware-configuration.nix|' hosts/laptop/configuration.nix
+    # remove the placeholder fileSystems block
+    sed -i '' '/# PLACEHOLDER/,/};/d' hosts/laptop/configuration.nix
   else
-    sed -i 's|# imports = \[ ./hardware-configuration.nix \];|imports = [ ./hardware-configuration.nix ];|' hosts/laptop/configuration.nix
+    sed -i 's|# ./hardware-configuration.nix|./hardware-configuration.nix|' hosts/laptop/configuration.nix
+    sed -i '/# PLACEHOLDER/,/};/d' hosts/laptop/configuration.nix
   fi
   ok "hardware config generated"
 fi

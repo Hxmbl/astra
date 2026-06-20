@@ -1,15 +1,15 @@
 { config, pkgs, ... }: {
-  imports = [ ../../profiles/desktop.nix ];
+  imports = [
+    ../../profiles/desktop.nix
+    # ./hardware-configuration.nix  # generated on install
+  ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "astra-laptop";
 
-  # generated on install
-  # imports = [ ./hardware-configuration.nix ];
-
-  # PLACEHOLDER — replace with UUID mounts from nixos-generate-config on real install
+  # PLACEHOLDER — replaced by hardware-configuration.nix on real install
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";
     fsType = "ext4";

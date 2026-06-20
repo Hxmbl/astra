@@ -15,4 +15,8 @@ jobs:
         with:
           extra_nix_config: |
             accept-flake-config = true
-      - run: nix flake check --all-systems
+      - run: nix build .#nixosConfigurations.vm-nano.config.system.build.toplevel --no-link --dry-run
+      - run: nix build .#nixosConfigurations.vm-mini.config.system.build.toplevel --no-link --dry-run
+      - run: nix build .#nixosConfigurations.vm-full.config.system.build.toplevel --no-link --dry-run
+      - run: nix build .#nixosConfigurations.server.config.system.build.toplevel --no-link --dry-run
+      - run: nix build .#nixosConfigurations.server-core.config.system.build.toplevel --no-link --dry-run
