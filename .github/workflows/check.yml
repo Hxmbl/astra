@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        host: [vm-nano, vm-mini, vm-full, server, server-core]
+        host: [vm-nano, vm-mini, vm-full, server-full, server-core]
     steps:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v27

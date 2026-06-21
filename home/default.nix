@@ -232,7 +232,8 @@
   '';
 
   programs.zsh.shellAliases = {
-    la = "ls -a";
+    ls = "eza --long";
+    la = "eza --long --all";
     p1 = "ping 1.1.1.1";
     speed = "speedtest";
     speed-bytes = "speedtest -u auto-binary-bytes";

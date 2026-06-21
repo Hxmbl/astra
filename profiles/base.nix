@@ -11,6 +11,7 @@
 
   environment.systemPackages = with pkgs; [
     curl
+    eza
     git
     helix
     htop

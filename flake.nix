@@ -55,17 +55,17 @@
         ];
       };
 
-      server = nixpkgs.lib.nixosSystem {
+      server-full = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          ./hosts/server/configuration.nix
+          ./hosts/server/server-full/configuration.nix
         ];
       };
 
       server-core = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          ./hosts/server-core/configuration.nix
+          ./hosts/server/server-core/configuration.nix
         ];
       };
     };

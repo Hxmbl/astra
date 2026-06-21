@@ -61,7 +61,7 @@ sudo nixos-rebuild switch --flake ~/astra#<host>
 | vm-mini | core | working |
 | vm-full | desktop | working |
 | laptop | desktop | wip |
-| server | base | working |
+| server-full | base | working |
 | server-core | base | working |
 
 ## structure

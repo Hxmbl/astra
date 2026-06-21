@@ -20,7 +20,7 @@ HOST_NAMES=(
   vm-mini
   vm-full
   laptop
-  server
+  server-full
   server-core
 )
 HOST_DESCS=(
@@ -28,7 +28,7 @@ HOST_DESCS=(
   "medium VM (core profile)"
   "full VM (desktop profile)"
   "laptop (desktop profile)"
-  "server (docker + caddy)"
+  "server full (docker + caddy)"
   "server minimal (base profile)"
 )
 
