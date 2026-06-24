@@ -243,5 +243,6 @@
     py = "python3";
     ff = "fastfetch";
     source-pyvenv = "source .venv/bin/activate";
+    where = "which"
   };
 }
