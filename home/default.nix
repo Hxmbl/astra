@@ -245,4 +245,4 @@
     source-pyvenv = "source .venv/bin/activate";
     where = "which"
   };
-}
+  };

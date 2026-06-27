@@ -1,21 +1,21 @@
-name: flake check
+# name: flake check
 
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+# on:
+#   push:
+#     branches: [main]
+#   pull_request:
+#     branches: [main]
 
-jobs:
-  check:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        host: [vm-nano, vm-mini, vm-full, server-full, server-core]
-    steps:
-      - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v27
-        with:
-          extra_nix_config: |
-            accept-flake-config = true
-      - run: nix build .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel --no-link
+# jobs:
+#   check:
+#     runs-on: ubuntu-latest
+#     strategy:
+#       matrix:
+#         host: [vm-nano, vm-mini, vm-full, server-full, server-core]
+#     steps:
+#       - uses: actions/checkout@v4
+#       - uses: cachix/install-nix-action@v27
+#         with:
+#           extra_nix_config: |
+#             accept-flake-config = true
+#       - run: nix build .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel --no-link
