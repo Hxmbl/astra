@@ -246,4 +246,4 @@
     where = "which";
     quit = "exit";
   };
-  };
+}
